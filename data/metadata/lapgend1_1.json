@@ -1,0 +1,29 @@
+{
+    "name": "Hall of Lapgend #1",
+    "description": "알랍인들이 인정한 레전드, 우리는 그들의 자취를 잊지 않는다.",
+    "image": "ipfs://QmU9h6ts3pHSMCcmZjZgyitATPvabbVTq9cGWJRT7oDQFU",
+    "sendable": true,
+    "attributes": [
+        {
+            "trait_type": "name",
+            "value": "내사랑인재의엉뎡이가너무나고그리운오늘."
+        },
+        {
+            "trait_type": "address",
+            "value": "0x5e8dfd9e1eefd984f5f4eec85260f12143c205a4"
+        },
+        {
+            "trait_type": "status",
+            "value": "retirement"
+        },
+        {
+            "trait_type": "term",
+            "value": "2021.11.11 ~ 2022.01.03"
+        },
+        {
+            "trait_type": "succession price",
+            "value": "30 KLAY"
+        }
+    ],
+    "external_link": ""
+}

@@ -1,0 +1,29 @@
+{
+    "name": "Hall of Lapgend #1",
+    "description": "알랍인들이 인정한 레전드, 우리는 그들의 자취를 잊지 않는다.",
+    "image": "ipfs://QmRouGwjr286kGv1C9KjdqCZuUvAzm4byNH6Jd9LEdzpNP",
+    "sendable": true,
+    "attributes": [
+        {
+            "trait_type": "name",
+            "value": "2대호카게_팔라대왕"
+        },
+        {
+            "trait_type": "address",
+            "value": "0x40F27984cBFd100832367A62f2f5bA0806fC3e4e"
+        },
+        {
+            "trait_type": "status",
+            "value": "active"
+        },
+        {
+            "trait_type": "term",
+            "value": "2022.01.03 ~"
+        },
+        {
+            "trait_type": "succession price",
+            "value": "21111 KLAY"
+        }
+    ],
+    "external_link": ""
+}

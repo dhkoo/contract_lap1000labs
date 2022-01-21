@@ -1,0 +1,29 @@
+{
+    "name": "Hall of Lapgend #4",
+    "description": "알랍인들이 인정한 레전드, 우리는 그들의 자취를 잊지 않는다.",
+    "image": "ipfs://QmP3JSPSwph1nBzn5fnSEFVeiiyd3o6zzyJhVQgzjc9fyi",
+    "sendable": true,
+    "attributes": [
+        {
+            "trait_type": "name",
+            "value": "나는 전설이다"
+        },
+        {
+            "trait_type": "address",
+            "value": "0x45277fe89bcd6012f105940f332bcb3c523ff6a3"
+        },
+        {
+            "trait_type": "status",
+            "value": "active"
+        },
+        {
+            "trait_type": "term",
+            "value": "2022.01.07 ~"
+        },
+        {
+            "trait_type": "succession price",
+            "value": "25000 KLAY"
+        }
+    ],
+    "external_link": ""
+}
