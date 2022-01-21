@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "@openzeppelin/test-helpers": "^0.5.15",
+    "@truffle/hdwallet-provider": "^2.0.0",
+    "config-yaml": "^1.1.6",
+    "openzeppelin-solidity": "^3.4.2",
+    "prettier": "^2.5.1",
+    "prettier-plugin-solidity": "^1.0.0-beta.19",
+    "solhint": "^3.3.6"
+  },
+  "scripts": {
+    "solhint": "./node_modules/.bin/solhint -f table contracts/**/*.sol",
+    "prettier": "prettier --write 'contracts/**/*.sol'"
+  }
+}
