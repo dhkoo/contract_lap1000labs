@@ -19,11 +19,7 @@ contract TestNFT is ERC721Burnable, Ownable {
         addMinter(msg.sender);
     }
 
-    function mint(address to, string memory tokenURI)
-        public
-        onlyMinter
-        returns (uint256)
-    {
+    function mint(address to, string memory tokenURI) public onlyMinter returns (uint256) {
         require(totalSupply() < MAX_SUPPLY, "EXCEED_MAX_SUPPLY!");
 
         uint256 id = totalSupply() + 1;
@@ -41,18 +37,13 @@ contract TestNFT is ERC721Burnable, Ownable {
     ) public onlyMinter {
         for (uint256 i = 0; i < count; ++i) {
             uint256 id = totalSupply() + 1;
-            string memory tokenURI = string(
-                abi.encodePacked(prefix, id.toString(), postfix)
-            );
+            string memory tokenURI = string(abi.encodePacked(prefix, id.toString(), postfix));
             _mint(to, id);
             setTokenURI(id, tokenURI);
         }
     }
 
-    function setTokenURI(uint256 tokenId, string memory tokenURI)
-        public
-        onlyMinter
-    {
+    function setTokenURI(uint256 tokenId, string memory tokenURI) public onlyMinter {
         _setTokenURI(tokenId, tokenURI);
     }
 
@@ -70,9 +61,7 @@ contract TestNFT is ERC721Burnable, Ownable {
         return minters[account];
     }
 
-    function bulkTransfer(address[] calldata tos, uint256[] calldata ids)
-        external
-    {
+    function bulkTransfer(address[] calldata tos, uint256[] calldata ids) external {
         for (uint256 i = 0; i < ids.length; ++i) {
             transferFrom(msg.sender, tos[i], ids[i]);
         }
