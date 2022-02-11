@@ -65,7 +65,7 @@ contract Donation is Ownable, ReentrancyGuard {
         } else {
             uint256 index = userPalaDonationIndex[msg.sender];
             Donator storage donator = userPalaDonation[index];
-            donator.amount.add(amount);
+            donator.amount += amount;
             donator.blockNumber = block.number;
         }
         _updatePalaTopDonator(msg.sender);
@@ -73,6 +73,8 @@ contract Donation is Ownable, ReentrancyGuard {
 
     function _updateKlayTopDonator(address account) internal {
         if (userKlayDonation.length == 0) return;
+        _removeKlayTopDonatorDup(account);
+
         Donator memory donator = userKlayDonation[userKlayDonationIndex[account]];
 
         uint256 length = klayTopDonator.length;
@@ -95,8 +97,9 @@ contract Donation is Ownable, ReentrancyGuard {
             }
             uint256 target;
             for (uint256 i = 0; i < count; ++i) {
-                uint256 blockNumber = klayTopDonator[removeCandidates[target]].blockNumber;
-                if (blockNumber > klayTopDonator[removeCandidates[i]].blockNumber) target = i;
+                uint256 blockNumber = klayTopDonator[removeCandidates[i]].blockNumber;
+                if (blockNumber > klayTopDonator[removeCandidates[i]].blockNumber)
+                    target = removeCandidates[i];
             }
             uint256 lastIndex = length - 1;
             if (target != lastIndex) {
@@ -109,6 +112,8 @@ contract Donation is Ownable, ReentrancyGuard {
 
     function _updatePalaTopDonator(address account) internal {
         if (userPalaDonation.length == 0) return;
+        //_removePalaTopDonatorDup(account);
+
         Donator memory donator = userPalaDonation[userPalaDonationIndex[account]];
 
         uint256 length = palaTopDonator.length;
@@ -131,8 +136,9 @@ contract Donation is Ownable, ReentrancyGuard {
             }
             uint256 target;
             for (uint256 i = 0; i < count; ++i) {
-                uint256 blockNumber = palaTopDonator[removeCandidates[target]].blockNumber;
-                if (blockNumber > palaTopDonator[removeCandidates[i]].blockNumber) target = i;
+                uint256 blockNumber = palaTopDonator[removeCandidates[i]].blockNumber;
+                if (blockNumber > palaTopDonator[removeCandidates[i]].blockNumber)
+                    target = removeCandidates[i];
             }
             uint256 lastIndex = length - 1;
             if (target != lastIndex) {
@@ -140,6 +146,26 @@ contract Donation is Ownable, ReentrancyGuard {
             }
             palaTopDonator.pop();
             palaTopDonator.push(donator);
+        }
+    }
+
+    function _removeKlayTopDonatorDup(address account) internal {
+        for (uint256 i = 0; i < klayTopDonator.length; ++i) {
+            if (account == klayTopDonator[i].account) {
+                uint256 lastIndex = klayTopDonator.length - 1;
+                if (i != lastIndex) klayTopDonator[i] = klayTopDonator[lastIndex];
+                klayTopDonator.pop();
+            }
+        }
+    }
+
+    function _removePalaTopDonatorDup(address account) internal {
+        for (uint256 i = 0; i < palaTopDonator.length; ++i) {
+            if (account == palaTopDonator[i].account) {
+                uint256 lastIndex = palaTopDonator.length - 1;
+                if (i != lastIndex) palaTopDonator[i] = palaTopDonator[lastIndex];
+                palaTopDonator.pop();
+            }
         }
     }
 
@@ -169,11 +195,11 @@ contract Donation is Ownable, ReentrancyGuard {
         return true;
     }
 
-    function klayTopDonatorLength() external view returns (uint256) {
+    function klayTopDonatorLength() public view returns (uint256) {
         return klayTopDonator.length;
     }
 
-    function palaTopDonatorLength() external view returns (uint256) {
+    function palaTopDonatorLength() public view returns (uint256) {
         return palaTopDonator.length;
     }
 }

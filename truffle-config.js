@@ -24,7 +24,10 @@ const HDWalletProvider = require('@truffle/hdwallet-provider');
 
 const privateKey = "../keystore/deployment_key.txt";
 const PRIVATE_KEY_BAOBAB = fs.readFileSync(path.join(__dirname, privateKey), "utf8");
-const PRIVATE_KEY_CYPRESS = fs.readFileSync(path.join(__dirname, privateKey), "utf8");
+const PRIVATE_KEY_CYPRESS = [
+  fs.readFileSync(path.join(__dirname, privateKey), "utf8"),
+  fs.readFileSync(path.join(__dirname, "../keystore/my.txt"), "utf8"),
+]
 
 const PRIVATE_KEY_BSC = '';
 const PRIVATE_KEY_MATIC = '';
@@ -66,7 +69,7 @@ module.exports = {
             network_id: "*",       // Any network (default: none)
         },
         baobab: {
-            provider: () => new HDWalletProvider(PRIVATE_KEY_BAOBAB, 'https://kaikas.baobab.klaytn.net:8651/'),
+          provider: () => new HDWalletProvider(PRIVATE_KEY_BAOBAB, 'https://public-node-api.klaytnapi.com/v1/baobab'),
             network_id: 1001, // Klaytn Testnet's id
             gas: 20000000,
             gasPrice: 25000000000, // 25 gwei
@@ -76,7 +79,7 @@ module.exports = {
             skipDryRun: false, // Skip dry run before migrations? (default: false for public nets )
         },
         cypress: {
-            provider: () => new HDWalletProvider(PRIVATE_KEY_CYPRESS, 'https://klaytn-en.sixnetwork.io:8651/'),
+          provider: () => new HDWalletProvider(PRIVATE_KEY_CYPRESS, 'https://klaytn-en.sixnetwork.io:8651/'),
             network_id: 8217, // Klaytn Main Net id
             gas: 20000000, 
             gasPrice: null, // 25 gwei
