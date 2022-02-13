@@ -33,7 +33,7 @@ contract Donation is Ownable, ReentrancyGuard {
     uint256 public totalKlayAmount;
     uint256 public totalPalaAmount;
 
-    address public dev;
+    address payable public dev;
 
     constructor(address _pala) public {
         pala = _pala;
@@ -43,13 +43,13 @@ contract Donation is Ownable, ReentrancyGuard {
     receive() external payable {}
 
     function setDevAccount(address account) external onlyOwner {
-        dev = account;
+        dev = payable(account);
     }
 
     function donateKLAY() external payable nonReentrant {
         require(msg.value > 0, "ZERO_KLAY");
 
-        payable(owner()).transfer(msg.value);
+        dev.transfer(msg.value);
         totalKlayAmount += msg.value;
 
         if (_isNewKlayDonator(msg.sender)) {
@@ -68,7 +68,7 @@ contract Donation is Ownable, ReentrancyGuard {
         require(IERC20(pala).allowance(msg.sender, address(this)) >= amount, "NOT_APPROVED");
         require(amount > 0, "ZERO_PALA");
 
-        IERC20(pala).transferFrom(msg.sender, owner(), amount);
+        IERC20(pala).transferFrom(msg.sender, dev, amount);
         totalPalaAmount += amount;
 
         if (_isNewPalaDonator(msg.sender)) {

@@ -167,4 +167,15 @@ contract("Donation Test", (accounts) => {
     devAddr = await donation.dev();
     console.log(`Current Dev Addr: ${devAddr}`);
   });
+
+  it("Dev Receive Donation Test", async () => {
+    for (let i = 1; i <= 1; ++i) {
+      console.log(`account${i}: ${accounts[i]}`);
+    }
+    let amount = await web3.eth.getBalance(await donation.dev());
+    console.log(`Before: ${amount / 1e18}`);
+    await donation.donateKLAY({ from: accounts[1], value: String(1 * 1e18) });
+    amount = await web3.eth.getBalance(await donation.dev());
+    console.log(`After : ${amount / 1e18}`);
+  });
 });
