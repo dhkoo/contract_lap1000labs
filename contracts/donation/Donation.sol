@@ -30,16 +30,27 @@ contract Donation is Ownable, ReentrancyGuard {
     Donator[] public klayTopDonator;
     Donator[] public palaTopDonator;
 
+    uint256 public totalKlayAmount;
+    uint256 public totalPalaAmount;
+
+    address public dev;
+
     constructor(address _pala) public {
         pala = _pala;
+        dev = msg.sender;
     }
 
     receive() external payable {}
+
+    function setDevAccount(address account) external onlyOwner {
+        dev = account;
+    }
 
     function donateKLAY() external payable nonReentrant {
         require(msg.value > 0, "ZERO_KLAY");
 
         payable(owner()).transfer(msg.value);
+        totalKlayAmount += msg.value;
 
         if (_isNewKlayDonator(msg.sender)) {
             userKlayDonationIndex[msg.sender] = userKlayDonation.length;
@@ -58,6 +69,7 @@ contract Donation is Ownable, ReentrancyGuard {
         require(amount > 0, "ZERO_PALA");
 
         IERC20(pala).transferFrom(msg.sender, owner(), amount);
+        totalPalaAmount += amount;
 
         if (_isNewPalaDonator(msg.sender)) {
             userPalaDonationIndex[msg.sender] = userPalaDonation.length;
@@ -112,7 +124,7 @@ contract Donation is Ownable, ReentrancyGuard {
 
     function _updatePalaTopDonator(address account) internal {
         if (userPalaDonation.length == 0) return;
-        //_removePalaTopDonatorDup(account);
+        _removePalaTopDonatorDup(account);
 
         Donator memory donator = userPalaDonation[userPalaDonationIndex[account]];
 
