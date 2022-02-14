@@ -32,7 +32,7 @@ contract DonationViewer {
                 .klayTopDonator(i);
             donatorList[i] = Donation.Donator(account, amount, blockNumber);
             (uint256[] memory ids, ) = AlapViewer(alapViewer).userTokenIds(account, 0, 1);
-            tokenList[i] = ids[0];
+            if (ids.length != 0) tokenList[i] = ids[0];
         }
     }
 
@@ -50,7 +50,7 @@ contract DonationViewer {
                 .palaTopDonator(i);
             donatorList[i] = Donation.Donator(account, amount, blockNumber);
             (uint256[] memory ids, ) = AlapViewer(alapViewer).userTokenIds(account, 0, 1);
-            tokenList[i] = ids[0];
+            if (ids.length != 0) tokenList[i] = ids[0];
         }
     }
 
