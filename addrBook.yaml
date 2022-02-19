@@ -1,4 +1,5 @@
 cypress:
+  pala: "0x7a1cdca99fe5995ab8e317ede8495c07cbf488ad"
   HallOfLapgend1: "0xEEa488122991467368fC9B59d5b32A7D5AD1D8A3"
   HallOfLapgend2: "0x2b4B679aDbb0b81e26C04FC5E54f8f32468CB70C"
   HallOfLapgend3: "0x85e7ECf746cF6CC438b26A531D72Fd06c69bc459"
@@ -6,12 +7,16 @@ cypress:
   Donation: "0xF1F85169070B81d7035933286c3C21411c94448B"
   DonationViewer: "0x071cE5071Ce53284ED021aD472b4Bc8CcC7be1d1"
   AlapViewer: "0x2bE97CE60051A16C477008fdFb15A0b10d5C461b"
+  NameBook: "0x036B14B0894223f2f3410144533b416772cEd3F9"
+  NameBookViewer: "0xC0ce4c1d90fFc0ed71E44032A818309287189d20"
 
 baobab:
   HallOfLapgend1: ""
   HallOfLapgend2: ""
   HallOfLapgend3: ""
   HallOfLapgend4: ""
-  Donation: "0xD8B88936761A7663288d1150247C7A7901103619"
+  Donation: ""
   DonationViewer: ""
   AlapViewer: ""
+  NameBook: ""
+  NameBook: ""
