@@ -35,15 +35,54 @@ contract Donation is Ownable, ReentrancyGuard {
 
     address payable public dev;
 
+    mapping(address => bool) public writers;
+
     constructor(address _pala) public {
         pala = _pala;
         dev = msg.sender;
+        addWriter(msg.sender);
     }
 
     receive() external payable {}
 
+    function addWriter(address account) public onlyOwner {
+        require(!isWriter(account), "account is already writer");
+        writers[account] = true;
+    }
+
+    function removeWriter(address account) public onlyOwner {
+        require(isWriter(account), "account is not writer");
+        writers[account] = false;
+    }
+
+    function isWriter(address account) public view returns (bool) {
+        return writers[account];
+    }
+
     function setDevAccount(address account) external onlyOwner {
         dev = payable(account);
+    }
+
+    function setKlayDonator(
+        address account,
+        uint256 amount,
+        uint256 blockNumber
+    ) external {
+        require(isWriter(msg.sender), "NOT_ALLOWED");
+        userKlayDonationIndex[account] = userKlayDonation.length;
+        userKlayDonation.push(Donator(account, amount, blockNumber));
+        _updateKlayTopDonator(account);
+    }
+
+    function setPalaDonator(
+        address account,
+        uint256 amount,
+        uint256 blockNumber
+    ) external {
+        require(isWriter(msg.sender), "NOT_ALLOWED");
+        userPalaDonationIndex[account] = userPalaDonation.length;
+        userPalaDonation.push(Donator(account, amount, blockNumber));
+        _updatePalaTopDonator(account);
     }
 
     function donateKLAY() external payable nonReentrant {
@@ -108,10 +147,12 @@ contract Donation is Ownable, ReentrancyGuard {
                 }
             }
             uint256 target;
+            uint256 blockNumber = MAX_VALUE;
             for (uint256 i = 0; i < count; ++i) {
-                uint256 blockNumber = klayTopDonator[removeCandidates[i]].blockNumber;
-                if (blockNumber > klayTopDonator[removeCandidates[i]].blockNumber)
+                if (blockNumber > klayTopDonator[removeCandidates[i]].blockNumber) {
+                    blockNumber = klayTopDonator[removeCandidates[i]].blockNumber;
                     target = removeCandidates[i];
+                }
             }
             uint256 lastIndex = length - 1;
             if (target != lastIndex) {
@@ -147,10 +188,12 @@ contract Donation is Ownable, ReentrancyGuard {
                 }
             }
             uint256 target;
+            uint256 blockNumber = MAX_VALUE;
             for (uint256 i = 0; i < count; ++i) {
-                uint256 blockNumber = palaTopDonator[removeCandidates[i]].blockNumber;
-                if (blockNumber > palaTopDonator[removeCandidates[i]].blockNumber)
+                if (blockNumber > palaTopDonator[removeCandidates[i]].blockNumber) {
+                    blockNumber = palaTopDonator[removeCandidates[i]].blockNumber;
                     target = removeCandidates[i];
+                }
             }
             uint256 lastIndex = length - 1;
             if (target != lastIndex) {
@@ -205,6 +248,14 @@ contract Donation is Ownable, ReentrancyGuard {
             }
         }
         return true;
+    }
+
+    function userKlayDonationLength() public view returns (uint256) {
+        return userKlayDonation.length;
+    }
+
+    function userPalaDonationLength() public view returns (uint256) {
+        return userPalaDonation.length;
     }
 
     function klayTopDonatorLength() public view returns (uint256) {
