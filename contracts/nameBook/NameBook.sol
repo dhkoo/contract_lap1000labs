@@ -2,11 +2,12 @@ pragma solidity ^0.6.0;
 pragma experimental ABIEncoderV2;
 
 import "openzeppelin-solidity/contracts/token/ERC20/IERC20.sol";
-import "openzeppelin-solidity/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol";
 import "../donation/Donation.sol";
 import "../donation/DonationViewer.sol";
 
-contract NameBook is Ownable {
+contract NameBook is OwnableUpgradeable {
     address public dev;
     uint256 public fee;
 
@@ -15,7 +16,9 @@ contract NameBook is Ownable {
 
     mapping(address => string) public names;
 
-    constructor(address _pala, address _donationViewerAddr) public {
+    function initialize(address _pala, address _donationViewerAddr) public initializer {
+        __Context_init();
+        __Ownable_init();
         dev = msg.sender;
         fee = 1e18;
         pala = _pala;
