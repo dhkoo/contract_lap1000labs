@@ -1,9 +1,9 @@
 const ConfigYaml = require("config-yaml");
-const addrBook = ConfigYaml("../addrBook.yaml");
+const Contracts = ConfigYaml("../lap_config/contracts.yaml");
 const DonationViewer = artifacts.require("DonationViewer");
 
 module.exports = async function(deployer, network, accounts) {
   if (network == "cypress" || network == "baobab") {
-    await deployer.deploy(DonationViewer, addrBook[network].Donation, addrBook[network].AlapViewer);
+    await deployer.deploy(DonationViewer, Contracts[network].Donation, Contracts[network].AlapViewer);
   }
 };
