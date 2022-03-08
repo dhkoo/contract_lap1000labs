@@ -1,0 +1,3 @@
+[submodule "lap_config"]
+	path = lap_config
+	url = https://github.com/dhkoo/lap_config.git
