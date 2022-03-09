@@ -6,6 +6,7 @@ import "openzeppelin-solidity/contracts/access/Ownable.sol";
 
 contract TestNFT is ERC721Burnable, Ownable {
     using Strings for uint256;
+    uint256 private _lastTokenId = 0;
     uint256 public constant MAX_SUPPLY = 10000;
 
     mapping(address => bool) public minters;
@@ -22,7 +23,7 @@ contract TestNFT is ERC721Burnable, Ownable {
     function mint(address to, string memory tokenURI) public onlyMinter returns (uint256) {
         require(totalSupply() < MAX_SUPPLY, "EXCEED_MAX_SUPPLY!");
 
-        uint256 id = totalSupply() + 1;
+        uint256 id = _generateTokenId();
         _mint(to, id);
         setTokenURI(id, tokenURI);
 
@@ -65,5 +66,9 @@ contract TestNFT is ERC721Burnable, Ownable {
         for (uint256 i = 0; i < ids.length; ++i) {
             transferFrom(msg.sender, tos[i], ids[i]);
         }
+    }
+
+    function _generateTokenId() internal returns (uint256) {
+        return ++_lastTokenId;
     }
 }
