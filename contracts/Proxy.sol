@@ -41,16 +41,26 @@ contract Proxy {
 
     fallback() external payable {
         assembly {
-            let _target := sload(_IMPLEMENTATION_SLOT)
-            calldatacopy(0x0, 0x0, calldatasize())
-            let result := delegatecall(gas(), _target, 0x0, calldatasize(), 0x0, 0)
-            returndatacopy(0x0, 0x0, returndatasize())
+            let ptr := mload(0x40)
+            calldatacopy(ptr, 0, calldatasize())
+
+            let result := delegatecall(
+                gas(),
+                sload(_IMPLEMENTATION_SLOT),
+                ptr,
+                calldatasize(),
+                0,
+                0
+            )
+            let size := returndatasize()
+            returndatacopy(ptr, 0, size)
+
             switch result
             case 0 {
-                revert(0, 0)
+                revert(ptr, size)
             }
             default {
-                return(0, returndatasize())
+                return(ptr, size)
             }
         }
     }
