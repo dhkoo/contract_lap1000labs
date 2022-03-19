@@ -1,0 +1,243 @@
+[
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_alap", "type": "address" },
+      { "internalType": "address", "name": "_donation", "type": "address" },
+      { "internalType": "address", "name": "_nameBook", "type": "address" },
+      {
+        "internalType": "address",
+        "name": "_alapRegistration",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "alap",
+    "outputs": [
+      { "internalType": "contract ERC721", "name": "", "type": "address" }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "alapRegistration",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "donation",
+    "outputs": [
+      { "internalType": "address payable", "name": "", "type": "address" }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "nameBook",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "newOwner", "type": "address" }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_account", "type": "address" }
+    ],
+    "name": "alapBalanceOf",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_account", "type": "address" },
+      { "internalType": "uint256", "name": "_offset", "type": "uint256" },
+      { "internalType": "uint256", "name": "_limit", "type": "uint256" }
+    ],
+    "name": "userAlapIds",
+    "outputs": [
+      { "internalType": "uint256[]", "name": "tokenIds", "type": "uint256[]" },
+      { "internalType": "uint256", "name": "count", "type": "uint256" }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_account", "type": "address" }
+    ],
+    "name": "representativeAlapIdOf",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "klayTopDonatorList",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "address", "name": "account", "type": "address" },
+          { "internalType": "uint256", "name": "amount", "type": "uint256" },
+          {
+            "internalType": "uint256",
+            "name": "blockNumber",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Donation.Donator[]",
+        "name": "donatorList",
+        "type": "tuple[]"
+      },
+      { "internalType": "uint256[]", "name": "tokenList", "type": "uint256[]" }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "palaTopDonatorList",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "address", "name": "account", "type": "address" },
+          { "internalType": "uint256", "name": "amount", "type": "uint256" },
+          {
+            "internalType": "uint256",
+            "name": "blockNumber",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Donation.Donator[]",
+        "name": "donatorList",
+        "type": "tuple[]"
+      },
+      { "internalType": "uint256[]", "name": "tokenList", "type": "uint256[]" }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [
+      { "internalType": "address[]", "name": "_accounts", "type": "address[]" }
+    ],
+    "name": "getNamesOf",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "address", "name": "account", "type": "address" },
+          { "internalType": "string", "name": "name", "type": "string" }
+        ],
+        "internalType": "struct UnityViewer.NameInfo[]",
+        "name": "nameInfos",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "getNamingFee",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_account", "type": "address" }
+    ],
+    "name": "getUserAlapId",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_contractAddr", "type": "address" }
+    ],
+    "name": "setDonation",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_contractAddr", "type": "address" }
+    ],
+    "name": "setNameBook",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_contractAddr", "type": "address" }
+    ],
+    "name": "setAlapRegistration",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

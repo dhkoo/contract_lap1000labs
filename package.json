@@ -4,6 +4,7 @@
     "@openzeppelin/test-helpers": "^0.5.15",
     "@truffle/hdwallet-provider": "^1.7.0",
     "config-yaml": "^1.1.6",
+    "generate-contract-interface": "^0.1.13",
     "openzeppelin-solidity": "^3.4.2",
     "prettier": "^2.5.1",
     "prettier-plugin-solidity": "^1.0.0-beta.19",

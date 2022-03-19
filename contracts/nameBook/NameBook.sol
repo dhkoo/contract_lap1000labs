@@ -17,7 +17,6 @@ contract NameBook is OwnableUpgradeable {
     mapping(address => string) public names;
 
     function initialize(address _pala, address _donationViewerAddr) public initializer {
-        __Context_init();
         __Ownable_init();
         dev = msg.sender;
         fee = 1e18;

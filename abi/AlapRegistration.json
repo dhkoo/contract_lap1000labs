@@ -66,14 +66,16 @@
   },
   {
     "inputs": [{ "internalType": "uint256", "name": "_id", "type": "uint256" }],
-    "name": "registerId",
+    "name": "registerAlapId",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "getRegisteredId",
+    "inputs": [
+      { "internalType": "address", "name": "_account", "type": "address" }
+    ],
+    "name": "getUserAlapId",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
