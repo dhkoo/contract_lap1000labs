@@ -8,29 +8,41 @@ import "openzeppelin-solidity/contracts/access/Ownable.sol";
 import "./donation/Donation.sol";
 import "./nameBook/NameBook.sol";
 import "./alapRegistration/AlapRegistration.sol";
+import "./commentBox/CommentBox.sol";
 
 contract UnityViewer is Ownable {
     struct NameInfo {
         address account;
         string name;
     }
+
+    struct CommentInfo {
+        address account;
+        string name;
+        string content;
+        uint256 timestamp;
+    }
+
     using SafeMath for uint256;
 
     ERC721 public immutable alap;
     address payable public donation;
     address public nameBook;
     address public alapRegistration;
+    address public commentBox;
 
     constructor(
         address _alap,
         address _donation,
         address _nameBook,
-        address _alapRegistration
+        address _alapRegistration,
+        address _commentBox
     ) public {
         alap = ERC721(_alap);
         donation = payable(_donation);
         nameBook = _nameBook;
         alapRegistration = _alapRegistration;
+        commentBox = _commentBox;
     }
 
     function alapBalanceOf(address _account) external view returns (uint256) {
@@ -111,6 +123,33 @@ contract UnityViewer is Ownable {
         return AlapRegistration(alapRegistration).getUserAlapId(_account);
     }
 
+    function getCommentInfos(uint256 _number)
+        public
+        view
+        returns (CommentInfo[] memory comments, uint256[] memory indices)
+    {
+        uint256 len = CommentBox(commentBox).getCommentsLength();
+        uint256 count = len > _number ? _number : len;
+
+        comments = new CommentInfo[](_number);
+        indices = new uint256[](_number);
+        uint256 index;
+        while (count > 0) {
+            (address account, string memory content, uint256 timestamp) = CommentBox(commentBox)
+                .comments(len - index - 1);
+            string memory name = NameBook(nameBook).names(account);
+
+            comments[index] = CommentInfo(account, name, content, timestamp);
+            indices[index] = len - index - 1;
+            ++index;
+            --count;
+        }
+    }
+
+    function getCommentFee() external view returns (uint256) {
+        return CommentBox(commentBox).fee();
+    }
+
     function setDonation(address _contractAddr) external onlyOwner {
         donation = payable(_contractAddr);
     }
@@ -121,5 +160,9 @@ contract UnityViewer is Ownable {
 
     function setAlapRegistration(address _contractAddr) external onlyOwner {
         alapRegistration = _contractAddr;
+    }
+
+    function setCommentBox(address _contractAddr) external onlyOwner {
+        commentBox = _contractAddr;
     }
 }

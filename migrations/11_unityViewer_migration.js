@@ -8,12 +8,14 @@ module.exports = async function (deployer, network, accounts) {
     const donationAddr = lapConfig[network].Donation;
     const nameBookAddr = lapConfig[network].NameBook;
     const alapRegistrationAddr = lapConfig[network].AlapRegistration;
+    const commentBoxAddr = lapConfig[network].CommentBox;
     await deployer.deploy(
       UnityViewer,
       alapAddr,
       donationAddr,
       nameBookAddr,
-      alapRegistrationAddr
+      alapRegistrationAddr,
+      commentBoxAddr
     );
   }
 };
