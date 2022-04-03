@@ -41,11 +41,11 @@ contract Store is OwnableUpgradeable, ReentrancyGuardUpgradeable {
     address public dev;
     address public membership;
 
-    uint256 public defaultFeeRatio = 250;
-    uint256 public premiumFeeRatio = 100;
+    uint256 public defaultFeeRatio;
+    uint256 public premiumFeeRatio;
 
-    uint256 public GCCount = 2;
-    uint256 public GCMaxIter = 10;
+    uint256 public GCCount;
+    uint256 public GCMaxIter;
 
     mapping(address => uint256) public gcUserListPointers;
 

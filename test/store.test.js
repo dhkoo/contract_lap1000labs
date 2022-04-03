@@ -4,8 +4,7 @@ const Proxy = artifacts.require("Proxy");
 const Store = artifacts.require("Store");
 const StoreViewer = artifacts.require("StoreViewer");
 const TestNFT = artifacts.require("TestNFT");
-const MAX_SIZE =
-  "115792089237316195423570985008687907853269984665640564039457584007913129639935";
+const BN = web3.utils.BN;
 
 contract("Store Test", ([dev, seller1, seller2, buyer]) => {
   beforeEach(async () => {
@@ -16,7 +15,7 @@ contract("Store Test", ([dev, seller1, seller2, buyer]) => {
     store = await Store.at(storeProxy.address);
     await store.initialize(
       dev,
-      250, // defaultFeeRatio
+      300, // defaultFeeRatio
       100, // premiumFeeRatio
       2, // GCCount
       10 // GCMaxIter
@@ -85,5 +84,35 @@ contract("Store Test", ([dev, seller1, seller2, buyer]) => {
 
     assert.equal(buyer, await testNFT.ownerOf(1), "NOT_ONWER");
     assert.notEqual(seller1, await testNFT.ownerOf(1), "NOT_TRANSFERED");
+  });
+
+  it("fee", async () => {
+    const price = String(1e18);
+    const expiredBlockNumber = (await web3.eth.getBlockNumber()) + 3600;
+    await store.list(testNFT.address, 1, price, expiredBlockNumber, {
+      from: seller1,
+    });
+
+    const sellerBalBefore = await web3.eth.getBalance(seller1);
+    const devBalBefore = await web3.eth.getBalance(dev);
+
+    await store.buy(testNFT.address, 1, price, {
+      from: buyer,
+      value: price,
+    });
+
+    const sellerBalAfter = await web3.eth.getBalance(seller1);
+    const devBalAfter = await web3.eth.getBalance(dev);
+
+    const feeRatio = await store.defaultFeeRatio();
+    const fee = new BN(price).mul(feeRatio).div(new BN(1e4));
+    assert.equal(
+      String(new BN(sellerBalAfter).sub(new BN(sellerBalBefore))),
+      String(new BN(price).sub(fee))
+    );
+    assert.equal(
+      String(new BN(devBalAfter).sub(new BN(devBalBefore))),
+      String(new BN(fee))
+    );
   });
 });
