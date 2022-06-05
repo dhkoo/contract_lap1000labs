@@ -219,7 +219,8 @@
           { "internalType": "address", "name": "account", "type": "address" },
           { "internalType": "string", "name": "name", "type": "string" },
           { "internalType": "string", "name": "content", "type": "string" },
-          { "internalType": "uint256", "name": "timestamp", "type": "uint256" }
+          { "internalType": "uint256", "name": "timestamp", "type": "uint256" },
+          { "internalType": "uint256", "name": "alapId", "type": "uint256" }
         ],
         "internalType": "struct UnityViewer.CommentInfo[]",
         "name": "comments",

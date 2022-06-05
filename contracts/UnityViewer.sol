@@ -21,6 +21,7 @@ contract UnityViewer is Ownable {
         string name;
         string content;
         uint256 timestamp;
+        uint256 alapId;
     }
 
     using SafeMath for uint256;
@@ -138,8 +139,9 @@ contract UnityViewer is Ownable {
             (address account, string memory content, uint256 timestamp) = CommentBox(commentBox)
                 .comments(len - index - 1);
             string memory name = NameBook(nameBook).names(account);
+            uint256 alapId = representativeAlapIdOf(account);
 
-            comments[index] = CommentInfo(account, name, content, timestamp);
+            comments[index] = CommentInfo(account, name, content, timestamp, alapId);
             indices[index] = len - index - 1;
             ++index;
             --count;
